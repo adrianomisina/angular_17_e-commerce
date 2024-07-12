@@ -1,6 +1,6 @@
-const express = require("express");
-const fs = require("fs");
-const cors = require("cors");
+import express, { json } from "express";
+import { readFile, writeFile } from "fs";
+import cors from "cors";
 
 const app = express();
 const port = 3000;
@@ -16,7 +16,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Use express.json() middleware to parse JSON bodies of requests
-app.use(express.json());
+app.use(json());
 
 // GET route - Allows to get all the items
 // example: localhost:3000/clothes?page=0&perPage=2
@@ -24,7 +24,7 @@ app.get("/clothes", (req, res) => {
   const page = parseInt(req.query.page) || 0;
   const perPage = parseInt(req.query.perPage) || 10;
 
-  fs.readFile("db.json", "utf8", (err, data) => {
+  readFile("db.json", "utf8", (err, data) => {
     if (err) {
       console.log(err);
       res.status(500).send("Internal Server Error");
@@ -61,7 +61,7 @@ app.get("/clothes", (req, res) => {
 app.post("/clothes", (req, res) => {
   const { image, name, price, rating } = req.body;
 
-  fs.readFile("db.json", "utf8", (err, data) => {
+  readFile("db.json", "utf8", (err, data) => {
     if (err) {
       console.log(err);
       res.status(500).send("Internal Server Error");
@@ -85,7 +85,7 @@ app.post("/clothes", (req, res) => {
 
     jsonData.items.push(newItem);
 
-    fs.writeFile("db.json", JSON.stringify(jsonData), (err) => {
+    writeFile("db.json", JSON.stringify(jsonData), (err) => {
       if (err) {
         console.log(err);
         res.status(500).send("Internal Server Error");
@@ -111,7 +111,7 @@ app.put("/clothes/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const { image, name, price, rating } = req.body;
 
-  fs.readFile("db.json", "utf8", (err, data) => {
+  readFile("db.json", "utf8", (err, data) => {
     if (err) {
       console.log(err);
       res.status(500).send("Internal Server Error");
@@ -135,7 +135,7 @@ app.put("/clothes/:id", (req, res) => {
       rating,
     };
 
-    fs.writeFile("db.json", JSON.stringify(jsonData), (err) => {
+    writeFile("db.json", JSON.stringify(jsonData), (err) => {
       if (err) {
         console.log(err);
         res.status(500).send("Internal Server Error");
@@ -152,7 +152,7 @@ app.put("/clothes/:id", (req, res) => {
 app.delete("/clothes/:id", (req, res) => {
   const id = parseInt(req.params.id);
 
-  fs.readFile("db.json", "utf8", (err, data) => {
+  readFile("db.json", "utf8", (err, data) => {
     if (err) {
       console.log(err);
       res.status(500).send("Internal Server Error");
@@ -170,7 +170,7 @@ app.delete("/clothes/:id", (req, res) => {
 
     jsonData.items.splice(index, 1);
 
-    fs.writeFile("db.json", JSON.stringify(jsonData), (err) => {
+    writeFile("db.json", JSON.stringify(jsonData), (err) => {
       if (err) {
         console.log(err);
         res.status(500).send("Internal Server Error");
