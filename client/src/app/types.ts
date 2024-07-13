@@ -26,3 +26,23 @@ export interface Options {
       }
     | boolean;
 }
+
+
+export interface Products {
+  items: Product[];
+  total: number;
+  perPage: number;
+  totalPages: number;
+}
+
+export interface Product {
+  price: string;
+  name: string;
+  image: string; 
+  rating: number;
+}
+
+export interface PaginationParams {
+  page: number;
+  perPage: number;
+}
