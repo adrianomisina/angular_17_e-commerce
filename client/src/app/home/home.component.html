@@ -9,6 +9,11 @@
   </div>
 
   <!-- Paginator -->
-   
+  <p-paginator
+    [row]="rows"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="[rowsPerPageOptions]"
+    (onPageChange)="onPageChange($event)"
+  >
+  </p-paginator>
 </div>
-

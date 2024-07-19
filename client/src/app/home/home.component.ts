@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component } from '@angular/core';
 import { ProductsService } from '../service/products.service';
 import { Product, Products } from '../types';
@@ -17,25 +18,26 @@ export class HomeComponent {
 
   products: Product[] = [];
 
+  totalRecords: number = 0;
+
   onProductOutput(product: Product) {
     console.log(product);
   }
 
+  onPageChange(event: any) {
+    this.fetchProducts(event.page, event.rows);
+  }
+
   fetchProducts(page: number, perPage: number) {
     this.productsService
-      .getProducts('http://localhost:3000/clothes', { page: 0, perPage: 5 })
+      .getProducts('http://localhost:3000/clothes', { page, perPage })
       .subscribe((products: Products) => {
-        // console.log(products.items);
         this.products = products.items;
+        this.totalRecords = products.total;
       });
   }
 
   ngOnInit() {
-    this.productsService
-      .getProducts('http://localhost:3000/clothes', { page: 0, perPage: 5 })
-      .subscribe((products: Products) => {
-        // console.log(products.items);
-        this.products = products.items;
-      });
+    this.fetchProducts(0, 5);
   }
 }
