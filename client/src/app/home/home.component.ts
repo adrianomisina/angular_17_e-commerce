@@ -14,6 +14,7 @@ import { PaginatorModule } from 'primeng/paginator';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
+[x: string]: any;
   constructor(private productsService: ProductsService) {}
 
   products: Product[] = [];

@@ -10,9 +10,9 @@
 
   <!-- Paginator -->
   <p-paginator
-    [row]="rows"
+    [rows]="5"
     [totalRecords]="totalRecords"
-    [rowsPerPageOptions]="[rowsPerPageOptions]"
+    [rowsPerPageOptions]="[5, 10, 20]"
     (onPageChange)="onPageChange($event)"
   >
   </p-paginator>
