@@ -9,3 +9,5 @@ import {provideAnimations} from '@angular/platform-browser/animations'
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideHttpClient(), provideAnimations()]
 };
+
+//2:30:18

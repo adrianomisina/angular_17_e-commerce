@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const express = require("express");
-const fs = require("fs");
-const cors = require("cors");
+const express = require('express');
+const fs = require('fs');
+const cors = require('cors');
 
 const app = express();
 const port = 3000;
 
 // Cors configuration - Allows requests from localhost:4200
 const corsOptions = {
-  origin: "http://localhost:4200",
+  origin: 'http://localhost:4200',
   optionsSuccessStatus: 204,
-  methods: "GET, POST, PUT, DELETE",
+  methods: 'GET, POST, PUT, DELETE',
 };
 
 // Use cors middleware
@@ -21,14 +21,14 @@ app.use(express.json());
 
 // GET route - Allows to get all the items
 // example: localhost:3000/clothes?page=0&perPage=2
-app.get("/clothes", (req, res) => {
+app.get('/clothes', (req, res) => {
   const page = parseInt(req.query.page) || 0;
   const perPage = parseInt(req.query.perPage) || 10;
 
-  fs.readFile("db.json", "utf8", (err, data) => {
+  fs.readFile('db.json', 'utf8', (err, data) => {
     if (err) {
       console.log(err);
-      res.status(500).send("Internal Server Error");
+      res.status(500).send('Internal Server Error');
       return;
     }
 
@@ -59,13 +59,13 @@ app.get("/clothes", (req, res) => {
     "rating": 4
   }
 */
-app.post("/clothes", (req, res) => {
+app.post('/clothes', (req, res) => {
   const { image, name, price, rating } = req.body;
 
-  fs.readFile("db.json", "utf8", (err, data) => {
+  fs.readFile('db.json', 'utf8', (err, data) => {
     if (err) {
       console.log(err);
-      res.status(500).send("Internal Server Error");
+      res.status(500).send('Internal Server Error');
       return;
     }
 
@@ -73,7 +73,7 @@ app.post("/clothes", (req, res) => {
 
     const maxId = jsonData.items.reduce(
       (max, item) => Math.max(max, item.id),
-      0
+      0,
     );
 
     const newItem = {
@@ -86,10 +86,10 @@ app.post("/clothes", (req, res) => {
 
     jsonData.items.push(newItem);
 
-    fs.writeFile("db.json", JSON.stringify(jsonData), (err) => {
+    fs.writeFile('db.json', JSON.stringify(jsonData), err => {
       if (err) {
         console.log(err);
-        res.status(500).send("Internal Server Error");
+        res.status(500).send('Internal Server Error');
         return;
       }
 
@@ -108,23 +108,23 @@ app.post("/clothes", (req, res) => {
     "rating": 4
   }
 */
-app.put("/clothes/:id", (req, res) => {
+app.put('/clothes/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const { image, name, price, rating } = req.body;
 
-  fs.readFile("db.json", "utf8", (err, data) => {
+  fs.readFile('db.json', 'utf8', (err, data) => {
     if (err) {
       console.log(err);
-      res.status(500).send("Internal Server Error");
+      res.status(500).send('Internal Server Error');
       return;
     }
 
     const jsonData = JSON.parse(data);
 
-    const index = jsonData.items.findIndex((item) => item.id === id);
+    const index = jsonData.items.findIndex(item => item.id === id);
 
     if (index === -1) {
-      res.status(404).send("Not Found");
+      res.status(404).send('Not Found');
       return;
     }
 
@@ -136,10 +136,10 @@ app.put("/clothes/:id", (req, res) => {
       rating,
     };
 
-    fs.writeFile("db.json", JSON.stringify(jsonData), (err) => {
+    fs.writeFile('db.json', JSON.stringify(jsonData), err => {
       if (err) {
         console.log(err);
-        res.status(500).send("Internal Server Error");
+        res.status(500).send('Internal Server Error');
         return;
       }
 
@@ -150,31 +150,31 @@ app.put("/clothes/:id", (req, res) => {
 
 // DELETE route - Allows to delete an item
 // example: localhost:3000/clothes/1
-app.delete("/clothes/:id", (req, res) => {
+app.delete('/clothes/:id', (req, res) => {
   const id = parseInt(req.params.id);
 
-  fs.readFile("db.json", "utf8", (err, data) => {
+  fs.readFile('db.json', 'utf8', (err, data) => {
     if (err) {
       console.log(err);
-      res.status(500).send("Internal Server Error");
+      res.status(500).send('Internal Server Error');
       return;
     }
 
     const jsonData = JSON.parse(data);
 
-    const index = jsonData.items.findIndex((item) => item.id === id);
+    const index = jsonData.items.findIndex(item => item.id === id);
 
     if (index === -1) {
-      res.status(404).send("Not Found");
+      res.status(404).send('Not Found');
       return;
     }
 
     jsonData.items.splice(index, 1);
 
-    fs.writeFile("db.json", JSON.stringify(jsonData), (err) => {
+    fs.writeFile('db.json', JSON.stringify(jsonData), err => {
       if (err) {
         console.log(err);
-        res.status(500).send("Internal Server Error");
+        res.status(500).send('Internal Server Error');
         return;
       }
 
