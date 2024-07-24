@@ -14,7 +14,7 @@ import { PaginatorModule } from 'primeng/paginator';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
-[x: string]: any;
+  [x: string]: any;
   constructor(private productsService: ProductsService) {}
 
   products: Product[] = [];
@@ -37,6 +37,18 @@ export class HomeComponent {
         this.products = products.items;
         this.totalRecords = products.total;
       });
+  }
+
+  editProduct(product: Product) {
+    console.log(product, 'Edit')
+  }
+
+  deleteProduct(product: Product) {
+    console.log(product, 'Delete')
+  }
+
+  addProduct(product: Product) {
+    console.log(product, 'Add')
   }
 
   ngOnInit() {
