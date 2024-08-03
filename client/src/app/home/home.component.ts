@@ -14,7 +14,6 @@ import { PaginatorModule } from 'primeng/paginator';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
-  [x: string]: any;
   constructor(private productsService: ProductsService) {}
 
   products: Product[] = [];
@@ -39,8 +38,13 @@ export class HomeComponent {
       });
   }
 
-  editProduct(product: Product) {
-    console.log(product, 'Edit')
+  editProduct(product: Product, id: number) {
+    this.productsService.editProduct(`http://localhost:3000/clothes/${id}`, product).subscribe(
+      {
+        next: (data) => console.log(data),
+        error:(error) => console.log(error),
+      }
+    )
   }
 
   deleteProduct(product: Product) {
@@ -55,3 +59,4 @@ export class HomeComponent {
     this.fetchProducts(0, this.rows);
   }
 }
+// 2:37:05
